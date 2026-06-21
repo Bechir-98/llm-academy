@@ -21,9 +21,11 @@ class RAGBase:
         self,
         index,
         llm_client,
+        course,
         instructions=INSTRUCTIONS,
         prompt_template=PROMPT_TEMPLATE,
-        course='llm-zoomcamp',
+        #course='llm-zoomcamp',
+        
         model='llama-3.1-8b-instant'
     ):
         self.index = index
@@ -34,8 +36,10 @@ class RAGBase:
         self.model = model
 
     def search(self, query, num_results=5):
-        boost_dict = {'question': 3.0, 'section': 0.5}
-        filter_dict = {'course': self.course}
+        #boost_dict = {'question': 3.0, 'section': 0.5}
+        boost_dict = {'content': 3.0}
+        filter_dict = {'filename':self.course}        
+        #filter_dict = {'course': self.course}
 
         return self.index.search(
             query,
@@ -48,9 +52,9 @@ class RAGBase:
         lines = []
 
         for doc in search_results:
-            lines.append(doc['section'])
-            lines.append('Q: ' + doc['question'])
-            lines.append('A: ' + doc['answer'])
+            #lines.append(doc['section'])
+            lines.append('C: ' + doc['content'])
+            lines.append('F: ' + doc['filename'])
             lines.append('')
 
         return '\n'.join(lines).strip()
@@ -72,10 +76,9 @@ class RAGBase:
             input=input_messages
         )
 
-        return response.output_text
+        return {"response":response.output_text,"input_tokens":response.usage.input_tokens}
 
     def rag(self, query):
         search_results = self.search(query)
         prompt = self.build_prompt(query, search_results)
-        answer = self.llm(prompt)
-        return answer
+        return self.llm(prompt)
