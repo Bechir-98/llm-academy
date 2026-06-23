@@ -15,8 +15,10 @@ def load_faq_data():
         course_response = requests.get(course_url)
         course_response.raise_for_status()
         course_data = course_response.json()
-
         documents.extend(course_data)
+
+    for doc in documents:
+        doc["doc_id"] = doc.pop("id") #we do this so we can add the id key to sqlite so we don't reimport the same records
 
     return documents
 

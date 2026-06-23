@@ -21,10 +21,10 @@ class RAGBase:
         self,
         index,
         llm_client,
-        course,
+        #course,
         instructions=INSTRUCTIONS,
         prompt_template=PROMPT_TEMPLATE,
-        #course='llm-zoomcamp',
+        course='llm-zoomcamp',
         
         model='llama-3.1-8b-instant'
     ):
@@ -35,10 +35,10 @@ class RAGBase:
         self.prompt_template = prompt_template
         self.model = model
 
-    def search(self, query, num_results=5):
+    """def search(self, query, num_results=5):
         #boost_dict = {'question': 3.0, 'section': 0.5}
         boost_dict = {'content': 3.0}
-        filter_dict = {'filename':self.course}        
+        filter_dict = {'course':self.course}        
         #filter_dict = {'course': self.course}
 
         return self.index.search(
@@ -46,15 +46,15 @@ class RAGBase:
             num_results=num_results,
             boost_dict=boost_dict,
             filter_dict=filter_dict
-        )
+        )"""
 
     def build_context(self, search_results):
         lines = []
 
         for doc in search_results:
             #lines.append(doc['section'])
-            lines.append('C: ' + doc['content'])
-            lines.append('F: ' + doc['filename'])
+            lines.append('Q: ' + doc['question'])
+            lines.append('A: ' + doc['answer'])
             lines.append('')
 
         return '\n'.join(lines).strip()
