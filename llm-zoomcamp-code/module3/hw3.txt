@@ -1,0 +1,18 @@
+Q1:
+AI Copilot has access to current Kestra plugin documentation
+
+Q2:
+Vague, generic, or fabricated — the model guesses from training data
+
+Q3:
+60-100 tokens ( 82 )
+
+Q4:
+2-5x more (200)
+
+Q5:
+About the same (within 20%)
+
+Q6:
+Use traditional task-based workflows for predictability and auditability
+

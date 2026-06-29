@@ -26,3 +26,5 @@ dist-ssr
 .env
 .venv
 llm-zoomcamp-code/.env
+uv.lock
+pyproject.toml
