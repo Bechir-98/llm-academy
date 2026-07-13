@@ -28,3 +28,5 @@ dist-ssr
 llm-zoomcamp-code/.env
 uv.lock
 pyproject.toml
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
